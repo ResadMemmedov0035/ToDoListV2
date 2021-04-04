@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <!-- Button Styles -->
+    
+    <Style x:Key="buttonStyleAR" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+        <Style.Setters>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontStretch" Value="Expanded"/>
+            <Setter Property="Margin" Value="3"/>
+        </Style.Setters>
+    </Style>
+
+    <!-- GroupBox Styles -->
+    
+    <Style x:Key="groupBoxStyleTitle" TargetType="GroupBox" BasedOn="{StaticResource MaterialDesignGroupBox}">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth2"/>
+    </Style>
+
+    <!-- TextBox Styles -->
+
+    <Style x:Key="textBoxStyleBase" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Margin" Value="0 0 0 10"/>
+    </Style>
+
+    <!-- ListBox item templates -->
+    
+    <DataTemplate x:Key="listBoxItemTemplateTask" DataType="{x:Type ListBoxItem}">
+        
+        <GroupBox Header="{Binding Title}"
+                  Style="{DynamicResource groupBoxStyleTitle}">
+
+            <TextBox Text="{Binding Description}" IsReadOnly="True"
+                     Style="{StaticResource textBoxStyleBase}"/>
+        </GroupBox>
+    </DataTemplate>
+    
+</ResourceDictionary>
