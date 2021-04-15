@@ -1,27 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ToDoListV2.Commands
 {
-    class Command : ICommand
+    class Command : CommandBase, ICommand
     {
-        private Action<object> action;
-        private Predicate<object> predicate;
+        private Action execute;
 
-        public Command(Action<object> action, Predicate<object> predicate = null)
+        public Command(Action execute, Func<bool> canExecute = null) : base(canExecute)
         {
-            this.action = action;
-            this.predicate = predicate;
+            this.execute = execute;
         }
 
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter) => predicate?.Invoke(parameter) ?? true;
-
-        public void Execute(object parameter) => action?.Invoke(parameter);
+        public void Execute(object parameter) => execute?.Invoke();
     }
 }

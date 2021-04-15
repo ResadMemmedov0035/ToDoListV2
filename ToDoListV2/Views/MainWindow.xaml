@@ -14,6 +14,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignBackground}"
         FontFamily="{DynamicResource MaterialDesignFont}"
+        x:Name="mainWindow" MinHeight="350" MinWidth="500"
         Title="To Do" Height="450" Width="800">
 
     <Window.Resources>
@@ -35,31 +36,28 @@
             <StackPanel Margin="4">
 
                 <Label Content="Title:"/>
-                <TextBox Text="{Binding TaskTitle}" 
+                <TextBox Text="{Binding TaskTitle, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource textBoxStyleBase}"/>
 
                 <Label Content="Description:"/>
-                <TextBox Text="{Binding TaskDescription}" Height="100" 
+                <TextBox Text="{Binding TaskDescription, UpdateSourceTrigger=PropertyChanged}" Height="100"
                          Style="{StaticResource textBoxStyleBase}"/>
 
                 <CheckBox IsChecked="{Binding TaskIsDone}" Content="Is done" Margin="5"/>
             </StackPanel>
 
             <!-- C1 R0 -->
-            <ListBox Grid.Column="1" 
+            <ListBox Grid.Column="1" Grid.RowSpan="2"
                      ItemsSource="{Binding Tasks}"
+                     SelectedItem="{Binding SelectedTask}"
                      HorizontalContentAlignment="Stretch"
+                     ScrollViewer.CanContentScroll="False"
                      ItemTemplate="{StaticResource listBoxItemTemplateTask}"/>
 
             <!-- C0 R1 -->
             <Button Content="Add task" Grid.Row="1"
                     Command="{Binding AddTaskCommand}"
-                    Style="{StaticResource buttonStyleAR}"/>
-
-            <!-- C1 R1 -->
-            <Button Content="Remove task" Grid.Column="1" Grid.Row="1"
-                    Command="{Binding RemoveTaskCommand}"
-                    Style="{StaticResource buttonStyleAR}"/>
+                    Style="{StaticResource buttonStyleAdd}"/>
 
         </Grid>
     </Border>

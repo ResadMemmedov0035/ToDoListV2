@@ -12,11 +12,47 @@
         </Style.Setters>
     </Style>
 
-    <!-- GroupBox Styles -->
+    <Style x:Key="buttonStyleAdd" TargetType="Button" BasedOn="{StaticResource buttonStyleAR}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="SkyBlue"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="buttonStyleRemove" TargetType="Button" BasedOn="{StaticResource buttonStyleAR}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="OrangeRed"/>
+            </Trigger>
+        </Style.Triggers>
+
+        <Style.Setters>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="DarkRed"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style.Setters>
+    </Style>
     
-    <Style x:Key="groupBoxStyleTitle" TargetType="GroupBox" BasedOn="{StaticResource MaterialDesignGroupBox}">
+    <!-- GroupBox Styles -->
+
+    <Style x:Key="groupBoxStyleTask" TargetType="GroupBox" BasedOn="{StaticResource MaterialDesignGroupBox}">
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth2"/>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDone}" Value="False">
+                <Setter Property="Background" Value="pink"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding IsDone}" Value="True">
+                <Setter Property="Background" Value="Aquamarine"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <!-- TextBox Styles -->
@@ -30,8 +66,19 @@
     
     <DataTemplate x:Key="listBoxItemTemplateTask" DataType="{x:Type ListBoxItem}">
         
-        <GroupBox Header="{Binding Title}"
-                  Style="{DynamicResource groupBoxStyleTitle}">
+        <GroupBox Style="{DynamicResource groupBoxStyleTask}">
+
+            <GroupBox.Header>
+                <DockPanel>
+
+                    <Button Content="X" DockPanel.Dock="Right"
+                            Command="{Binding ElementName=mainWindow, Path=DataContext.RemoveTaskCommand}"
+                            CommandParameter="{Binding}"
+                            Style="{StaticResource buttonStyleRemove}"/>
+
+                    <Label Content="{Binding Title}"/>
+                </DockPanel>
+            </GroupBox.Header>
 
             <TextBox Text="{Binding Description}" IsReadOnly="True"
                      Style="{StaticResource textBoxStyleBase}"/>
